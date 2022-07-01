@@ -2,14 +2,61 @@ import { DefaultUi, Player, Youtube } from "@vime/react";
 import { CaretRight, DiscordLogo, FileArrowDown, Image, Lightning } from "phosphor-react";
 
 import '@vime/core/themes/default.css'
+import { useQuery } from "@apollo/client";
+import { gql } from '@apollo/client'
 
-export function Video(){
+const GET_LESSON_BY_SLUG_QUERY = gql `
+    query GetLessonBySlug ($slug: String) {
+        lesson(where: {slug: $slug}) {
+            title
+            videoId
+            description
+            teacher {
+                name
+                bio
+                avatarURL
+            }
+    }
+}
+`
+
+interface GetLessonBySlugResponse{
+    lesson: {
+        title: string;
+        videoId: string;
+        description: string;
+        teacher: {
+            bio: string;
+            avatarURL: string;
+            name: string;
+        }
+    }
+}
+
+interface VideoProps{
+    lessonSlug: string;
+}
+
+export function Video(props: VideoProps){
+
+    const { data } = useQuery<GetLessonBySlugResponse>(GET_LESSON_BY_SLUG_QUERY, {
+        variables: {
+            slug: props.lessonSlug
+        }
+    })
+
+    if(!data){
+        return(
+            <div className="flex-1"><p>Carregando...</p></div>
+        )
+    }
+
     return(
         <div className="flex-1">
             <div className="bg-black flex justify-center">
                 <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
                     <Player>
-                        <Youtube videoId="SO4-izct7Mc"/>
+                        <Youtube videoId={data.lesson.videoId}/>
                         <DefaultUi />
                     </Player>
                 </div>
@@ -19,18 +66,18 @@ export function Video(){
                 <div className="flex items-start gap-16">
                     <div className="flex-1">
                         <h1 className="text-2xl font-bold">
-                            Aula 01 - Abertura do Ignite Lab
+                            {data.lesson.title}
                         </h1>
                         <p className="mt-4 text-gray-200 leading-relaxed">
-                            Na aula 1 você vai entender quais são as oportunidades que você pode ter se especializando em ReactJS e porque essa é a decisão mais inteligente pra sua carreira no momento! E também vamos dar início ao projeto que vamos desenvolver nessa semana: uma plataforma de conteúdos em vídeo. Bora codar!
+                            {data.lesson.description}
                         </p>
 
                         <div className="flex items-center gap-4 mt-6">
-                            <img src="https://avatars.githubusercontent.com/u/71454293?v=4" alt="" className="h-16 w-16 rounded-full" />
+                            <img src={data.lesson.teacher.avatarURL} alt="" className="h-16 w-16 rounded-full border-2 border-blue-500" />
 
                             <div className="leading-relaxed">
-                                <strong className="font-bold text-2xl">Mylena Vitoriano</strong>
-                                <span className="text-gray-200 text-sm block">Desenvolvedora Front-end</span>
+                                <strong className="font-bold text-2xl">{data.lesson.teacher.name}</strong>
+                                <span className="text-gray-200 text-sm block">{data.lesson.teacher.bio}</span>
                             </div>
                         </div>
                     </div>

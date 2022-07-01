@@ -376,7 +376,7 @@
 
 "@vime/core@^5.3.1":
   version "5.3.1"
-  resolved "https://registry.npmjs.org/@vime/core/-/core-5.3.1.tgz"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-5.3.1.tgz#2df60b8a5c959808d98d29ca4ee63ef9d1ca22b5"
   integrity sha512-FbBla3WhQ72rWZUBR93XVpNAJwOMdQeWx8ZbRffYL5PXq0PzqSnjrYcE1KIsnmDt6v2jsOxh4hT264Rts5jBKQ==
   dependencies:
     "@stencil/core" "2.5.2"
@@ -387,7 +387,7 @@
 
 "@vime/react@^5.3.1":
   version "5.3.1"
-  resolved "https://registry.npmjs.org/@vime/react/-/react-5.3.1.tgz"
+  resolved "https://registry.yarnpkg.com/@vime/react/-/react-5.3.1.tgz#918fd447fa9428a7e3e4d984d5c4c646b55438ea"
   integrity sha512-MnWua6FCQ84af1k4jan1aaLmL57UF2WKwqhw8fw9PQ3Rz7W+vdPEb9VmNnyNZ3PessQRg5O7R94QRvUNKqkGog==
   dependencies:
     "@seznam/compose-react-refs" "^1.0.4"

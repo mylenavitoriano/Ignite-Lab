@@ -7,13 +7,11 @@ import { Router } from './Router'
 
 function App() {
   return (
-    <>
     <ApolloProvider client={ client }>
       <BrowserRouter>
         <Router/>
       </BrowserRouter>
     </ApolloProvider>
-    </>
   )
 }
 
